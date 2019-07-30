@@ -40,12 +40,21 @@ public class FibTest
     @Test
     public void testFib()
     {
-        TimeTool.cost("fib1", () -> {
-            System.out.println(fib1(40));
-        });
+//        TimeTool.cost("fib1", () -> {
+//            System.out.println(fib1(40));
+//        });
+//
+//        TimeTool.cost("fib2", () -> {
+//            System.out.println(fib2(40));
+//        });
+        char a= 'a';
+        String s = String.valueOf(a);
+        byte[] data = s.getBytes();
+        System.out.println(data.length);
+    }
 
-        TimeTool.cost("fib2", () -> {
-            System.out.println(fib2(40));
-        });
+    public static void main(String[] args)
+    {
+
     }
 }
