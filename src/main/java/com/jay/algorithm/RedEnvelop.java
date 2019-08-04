@@ -78,7 +78,6 @@ public class RedEnvelop
         BigDecimal b1 = new BigDecimal(Float.toString(d1));
         BigDecimal b2 = new BigDecimal(Float.toString(d2));
         return b1.subtract(b2).floatValue();
-
     }
 
     //相乘
@@ -113,9 +112,25 @@ public class RedEnvelop
 
     public static void main(String[] args) throws Exception
     {
+        testGetRedEnvelop();
+    }
+
+    private static void testGetRedEnvelop()
+    {
+        List<Float> list = createRedEnvelop(50F, 200);
+        for (int i = 0; i < 205; i++)
+        {
+            new Thread(new GetRedEnvelop(list)).start();
+        }
+    }
+
+
+    @Test
+    public void testCreateRedEnvelog()
+    {
         for (int i = 0; i < 1000; i++)
         {
-            List<Float> list = createRedEnvelop(100.5F, 10);
+            List<Float> list = createRedEnvelop(100.5F, 100);
             System.out.println(list);
             float total = 0F;
             for (Float value : list)
@@ -124,7 +139,6 @@ public class RedEnvelop
             }
             Assert.assertEquals(new BigDecimal(Float.toString(100.5F)), new BigDecimal(Float.toString(total)));
         }
-
     }
 
     /**
@@ -145,14 +159,21 @@ public class RedEnvelop
         }
         while (redList.size() < num)
         {
-            float max = Collections.max(redList);
+            float max = 0F;
+            while (max < 0.02F)
+            {
+                max = redList.get(random.nextInt(redList.size()));
+            }
             redList.remove(max);
             float first = 0F;
-            while (first == 0F)
+            float second = 0F;
+
+            while (first == 0F || second == 0F)
             {
                 first = remainTwoScale(max * random.nextFloat());
+                second = sub(max, first);
             }
-            float second = sub(max, first);
+
             redList.add(first);
             redList.add(second);
         }
@@ -243,13 +264,12 @@ public class RedEnvelop
     /**
      * 返回保留2位小数的值
      *
-     * @param a
+     * @param value
      * @return
      */
-    public static float remainTwoScale(float a)
+    public static float remainTwoScale(float value)
     {
-        BigDecimal bg = new BigDecimal(Float.toString(a));
-        float f1 = bg.setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
-        return f1;
+        BigDecimal bg = new BigDecimal(Float.toString(value));
+        return bg.setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
     }
 }

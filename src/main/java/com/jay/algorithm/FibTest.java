@@ -1,7 +1,9 @@
-package com.jay.algorithm.fib;
+package com.jay.algorithm;
 
 import com.jay.tool.time.TimeTool;
 import org.junit.Test;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * created by Jay on 2019/7/29
@@ -27,7 +29,7 @@ public class FibTest
     {
         int first = 1;
         int second = 1;
-        for (int i = 1; i < n-1; i++)
+        for (int i = 1; i < n - 1; i++)
         {
             int sum = first + second;
             first = second;
@@ -47,7 +49,7 @@ public class FibTest
 //        TimeTool.cost("fib2", () -> {
 //            System.out.println(fib2(40));
 //        });
-        char a= 'a';
+        char a = 'a';
         String s = String.valueOf(a);
         byte[] data = s.getBytes();
         System.out.println(data.length);
@@ -55,6 +57,38 @@ public class FibTest
 
     public static void main(String[] args)
     {
+        float numG = Float.parseFloat(args[0]);
+        int num = (int) numG;
+        float remain = numG - num;
+        int byteLen = num;
+        if (remain > 0)
+        {
+            byteLen++;
+        }
 
+        byte[][] bytes = new byte[byteLen][1];
+        for (int i = 0; i < num; i++)
+        {
+            bytes[i] = new byte[1024 * 1024 * 1024];
+        }
+        if (remain > 0)
+        {
+            int remainByte = (int) (remain * 1024 * 1024 * 1024);
+            bytes[byteLen - 1] = new byte[remainByte];
+        }
+
+        try
+        {
+            TimeUnit.DAYS.sleep(Long.MAX_VALUE);
+        }
+        catch (InterruptedException e)
+        {
+
+        }
+
+        for (int i = 0; i < num; i++)
+        {
+            bytes[i][0] = 0;
+        }
     }
 }
